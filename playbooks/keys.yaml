@@ -1,0 +1,16 @@
+- hosts: kubernetes-master-nodes,kubernetes-worker-nodes
+  become: yes
+  tasks:
+    - name: create the 'root' user
+      user: name=root append=yes state=present createhome=yes shell=/bin/bash
+
+    - name: allow 'root' to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        line: 'root ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
+
+    - name: set up authorized keys for the root user
+      authorized_key: user=root key="{{item}}"
+      with_file:
+        - ~/.ssh/id_rsa.pub

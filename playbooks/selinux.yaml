@@ -1,0 +1,9 @@
+
+- hosts: kubernetes-master-nodes,kubernetes-worker-nodes
+  become: yes
+  tasks:
+    - name: Disable SELinux
+      selinux:
+        state: disabled   
+  
+

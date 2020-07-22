@@ -1,0 +1,12 @@
+- hosts: kubernetes-master-nodes,kubernetes-worker-nodes
+  become: yes
+  tasks:
+    - name: turn off swapoff
+      shell: swapoff -a
+
+
+    - name: Commenting Swap entries in /etc/fstab
+      replace:
+       path: /etc/fstab
+       regexp: '(.*swap*)'
+       replace: '#\1'

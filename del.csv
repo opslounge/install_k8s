@@ -1,0 +1,4 @@
+hname,address,gate,vlan,status,frc,temp,infstate,nic,storageip,vlan2
+k8svteam01,10.226.226.16,10.226.224.1,mgmt,absent,yes,apcent7template,absent,True,192.168.150.216,VM-iSCSI
+k8svteam02,10.226.226.17,10.226.224.1,mgmt,absent,yes,apcent7template,absent,True,192.168.150.217,VM-iSCSI
+k8svteam03,10.226.226.18,10.226.224.1,mgmt,absent,yes,apcent7template,absent,True,192.168.150.218,VM-iSCSI

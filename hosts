@@ -1,0 +1,16 @@
+[vcenter_hostname]
+10.226.224.35
+
+[kubernetes-master-nodes]
+kubernetes-master ansible_host=10.226.226.16
+
+[kubernetes-worker-nodes]
+kubernetes-worker ansible_host=10.226.226.17
+kubernetes-worker1 ansible_host=10.226.226.18
+
+
+[all:vars]
+ansible_user=root
+ansible_ssh_pass=pureuser
+
+

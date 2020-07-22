@@ -1,0 +1,48 @@
+---
+- hosts: "{{ vcenter_hostname }}"
+  connection: local
+  user: root
+  gather_facts: false
+  serial: 1
+
+  vars:
+    my_env: test
+    vcenter_hostname: "10.226.224.35"
+    vcenter_username: "demouser@purestorage.int"
+    vcenter_password: "P@ssw0rd"
+
+  tasks:
+   - include_csv: src=clone.csv
+   - vmware_guest:
+       hostname: "{{ vcenter_hostname }}"
+       username: "{{ vcenter_username }}"
+       password: "{{ vcenter_password }}"
+       validate_certs: false
+       datacenter: Site-B
+       folder: /vteam
+       cluster: PROD
+       name: "{{ item.hname }}"
+       customization:
+         name: "{{ item.hname }}"
+       hardware:
+         num_cpus: 2
+         memory_mb: 16384
+      #   memory_mb: 32768
+       state: "{{ item.status }}"
+       force: "{{ item.frc }}" 
+       template: "{{ item.temp }}"
+       networks:
+       - name: "{{ item.vlan }}"
+         type: static
+         ip: "{{ item.address }}"
+         netmask: 255.255.240.0
+         gateway: "{{ item.gate }}"
+         start_connected: "{{ item.nic }}"   
+         dns_servers:
+         - 10.226.224.7
+       - name: "{{ item.vlan2 }}"
+         type: static
+         ip: "{{ item.storageip }}"
+         netmask: 255.255.255.0
+         start_connected: True
+     with_items: "{{ clone }}"

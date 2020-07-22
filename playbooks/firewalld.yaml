@@ -1,0 +1,11 @@
+---
+- hosts: kubernetes-master-nodes,kuberenetes-worker-nodes
+  connection: ssh
+  become: yes
+  gather_facts: False
+  tasks:
+   - name: Stop and disable firewalld.
+     service:
+       name: firewalld
+       state: stopped
+       enabled: False

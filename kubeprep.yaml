@@ -1,0 +1,7 @@
+---
+- import_playbook: playbooks/resolv.yaml
+- import_playbook: playbooks/keys.yaml
+- import_playbook: playbooks/swap.yaml
+- import_playbook: playbooks/osprep.yaml
+- import_playbook: playbooks/selinux.yaml
+- import_playbook: playbooks/firewalld.yaml
