@@ -1,0 +1,27 @@
+- hosts: kubernetes-master-nodes,kubernetes-worker-nodes
+  become: yes
+  tasks:
+
+    - name: clean up any iscsi config 
+      shell: sudo rm /etc/iscsi/initiatorname.iscsi
+
+    - name: configure iscsi initatorname
+      shell: echo InitiatorName=iqn.1994-05.com.drnode$(hostname) >> /etc/iscsi/initiatorname.iscsi 
+
+    - name: restart iscsi service
+      service: 
+        name: iscsid
+        state: restarted
+
+    - name: enable iscsi service
+      service: 
+        name: iscsid
+        enabled: yes
+
+    - name: discover iscsi targets for reddotx
+      shell: sudo iscsiadm -m discovery -t st -p 192.168.150.120
+      register: discovery
+
+    - debug: 
+        msg: 
+        - "{{ discovery }}"

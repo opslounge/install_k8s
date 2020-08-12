@@ -1,0 +1,16 @@
+- hosts: kubernetes-master-nodes,kubernetes-worker-nodes
+  become: yes
+  tasks:
+
+    - copy:
+        src: /etc/ansible/files/multipath.conf
+        dest: /etc/multipath.conf
+        mode: 0644
+    
+    - name: enable multipath
+      shell: mpathconf --enable --user_friendly_names y
+      
+    - name: enable multipath
+      shell: sudo service multipathd start
+    
+
